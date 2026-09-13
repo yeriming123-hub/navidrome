@@ -12,11 +12,14 @@ runs:
   steps:
     - name: Download TagLib
       shell: bash
+      env:
+        PLATFORM: ${{ inputs.platform }}
+        VERSION: ${{ inputs.version }}
       run: |
         mkdir -p /tmp/taglib
         cd /tmp
-        FILE=taglib-${{ inputs.platform }}.tar.gz
-        wget https://github.com/navidrome/cross-taglib/releases/download/v${{ inputs.version }}/${FILE}
+        FILE=taglib-${PLATFORM}.tar.gz
+        wget https://github.com/navidrome/cross-taglib/releases/download/v${VERSION}/${FILE}
         tar -xzf ${FILE} -C taglib
         PKG_CONFIG_PREFIX=/tmp/taglib
         echo "PKG_CONFIG_PREFIX=${PKG_CONFIG_PREFIX}" >> $GITHUB_ENV

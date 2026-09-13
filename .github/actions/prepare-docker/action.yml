@@ -42,12 +42,14 @@ runs:
   steps:
     - name: Check Docker Hub configuration
       shell: bash
+      env:
+        HUB_REPOSITORY: ${{inputs.hub_repository}}
       run: |
-        if [ -z "${{inputs.hub_repository}}" ]; then
+        if [ -z "$HUB_REPOSITORY" ]; then
           echo "DOCKER_HUB_REPO=none" >> $GITHUB_ENV
           echo "DOCKER_HUB_ENABLED=false" >> $GITHUB_ENV
         else
-          echo "DOCKER_HUB_REPO=${{inputs.hub_repository}}" >> $GITHUB_ENV
+          echo "DOCKER_HUB_REPO=$HUB_REPOSITORY" >> $GITHUB_ENV
           echo "DOCKER_HUB_ENABLED=true" >> $GITHUB_ENV
         fi
 
